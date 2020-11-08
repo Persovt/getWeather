@@ -1,12 +1,13 @@
 import React  from 'react';
-import {Button} from 'antd'
-import { Select } from 'antd';
+import {Button, Result} from 'antd'
+import { Select ,Card} from 'antd';
 
 
 
 const cityList = require('./current.city.list.min.json')
 const { Option } = Select;
 function onChange(value: string) {
+  console.log(value)
   console.log(`selected `, cityList[value].coord);
 }
 
@@ -18,15 +19,20 @@ function App() {
   navigator.geolocation.getCurrentPosition(function(position) {
     let lat = position.coords.latitude;
     let lng = position.coords.longitude;
-    console.log(lat,lng)
+   
     getWeather(lat,lng)
   })
 
   const getWeather = (lat: number, lon: number) => {
-      fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=86181034ba903cb3066f9d04d1a27943`)
-            .then(response => response.json())
-            .then(result => console.log(result))
-            .catch((error) => console.log('Error:  ' + error))
+   
+   
+    
+              fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&,NC&key=11ad7657a3f04acdae239ef3d91e2974&days=7`)
+                
+              .then(response => response.json())
+              .then(result => console.log(result))
+              .catch((error) => console.log('Error:  ' + error))
+   
   }
  
   
@@ -46,16 +52,20 @@ function App() {
       //   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       // }
     >
-     {cityList.map((sity: City, id: number) => {
+     {cityList.map((sity: City, index: number) => {
        return(
-        <Option key={id} value={sity.id}>{sity.name}</Option>
+        <Option key={index} value={index}>{sity.name}</Option>
        )
      })}
   
     </Select>
 
-       <Button type="primary" onClick={addCity}>Button</Button>
+       <Button type="primary" onClick={addCity}>Add city </Button>
 
+       <Card title="Currect city">
+          <p>Card content</p>
+        
+        </Card>
        
     </div>
   );
