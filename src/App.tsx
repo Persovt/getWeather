@@ -1,24 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 function App() {
+  const getWeather = (sity: number) => {
+  fetch(`http://api.openweathermap.org/data/2.5/weather?id=${sity}&appid=86181034ba903cb3066f9d04d1a27943`)
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch((error) => console.log('Error:  ' + error))
+  }
+  getWeather(703448)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
     </div>
   );
 }
