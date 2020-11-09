@@ -3,12 +3,6 @@ import { Select } from 'antd';
 import store from './redux-store'
 
 const cityList = require('./current.city.list.min.json')
-
-
-type Coord = {lat: number, lon: number}
-type City = {name: String, coord: Coord, id: number, filter: any}
-
-
 const { Option } = Select;
 
 
@@ -24,7 +18,11 @@ const onChange = (value: string) =>  store.dispatch(SELECT_ID(value))
 
 
 
+
+
  const selectCity = () => {
+   
+   
     return (
        
              <Select
@@ -38,8 +36,8 @@ const onChange = (value: string) =>  store.dispatch(SELECT_ID(value))
                    onChange={onChange}
                 >
                 {
-                
-                cityList.map((sity: City, index: number) => {
+                    
+                    cityList.map((sity: any, index: number) => {
                     
                 return(
                     <Option

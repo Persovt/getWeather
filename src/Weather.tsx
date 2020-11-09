@@ -12,7 +12,7 @@ const DELETE_CITY = (value: CoordType) => {
 }
 
 
-const Weather = ({key, props, id}:any) => {  
+const Weather = ({props}:any) => {  
 
     let city = props.action.city;
     let data = city.data;
@@ -21,28 +21,25 @@ const Weather = ({key, props, id}:any) => {
     const deleteWeather = () =>{
     
       const coord = {lat: city.lat, lon: city.lon}
-     
       store.dispatch(DELETE_CITY(coord))
-     
-      
       localStorage.removeItem(city.city_name)
 
      
     }
-    console.log(data)
+  
     
         return(
           <Col >
             <Card title={city.city_name}>
                 {
                   data.map((data: any, index: number) => {
-                    console.log(data)
+                   
                     return(
-                      <p>
+                      <div key={index}>
                         <p>Data: {data.valid_date} </p>
                         <img src={`https://www.weatherbit.io/static/img/icons/${data.weather.icon}.png`} alt="weather" width="70"/>
                         <p>Temp: {data.temp}</p>
-                      </p>
+                      </div>
                     )
                   })
                 }

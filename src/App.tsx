@@ -28,7 +28,7 @@ const addCity = () => {
 
   getWeather(cityCoord.lat, cityCoord.lon)
   .then(result => {
-  store.dispatch(ADD_CITY(result), console.log(result, "result"))
+  store.dispatch(ADD_CITY(result))
     
    store.getState().city.map((value: any, key: string) => {
    
@@ -37,7 +37,7 @@ const addCity = () => {
    })
  
   })
-  console.log(localStorage)
+ 
 }
 
 
@@ -77,8 +77,8 @@ const App = () => {
        <Button type="primary" onClick={addCity} disabled={!(store.getState().id.id >= 0)}>Add city </Button>
       <Row>
        { store.getState().city.map((city: any, index: any) => {
-         
-         return( <Weather key={index} props={city} id={index}  />)
+          
+         return( <Weather key={index} props={city}  />)
        }) }
        </Row>
     </div>
