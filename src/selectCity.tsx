@@ -19,10 +19,7 @@ const onChange = (value: string) =>  store.dispatch(SELECT_ID(value))
 
 
 
-
  const selectCity = () => {
-   
-   
     return (
        
              <Select
@@ -38,14 +35,14 @@ const onChange = (value: string) =>  store.dispatch(SELECT_ID(value))
                 {
                     
                     cityList.map((sity: any, index: number) => {
-                    
+                        
                 return(
                     <Option
                     key={index} 
                     value={index}
                     >
-                        {sity.name}
-                        </Option>
+                    {sity.name}
+                    </Option>
                 )
                 })}
             

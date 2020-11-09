@@ -16,13 +16,6 @@ const ADD_CITY = (result: string) => {
     city: result
   }
 }
-const ADD_CURRECT_CITY = (result: string) => {
-  return{
-    type: 'ADD_CURRECT_CITY',
-    city: result
-  }
-}
-
 const addCity = () => {
   let cityCoord = cityList[store.getState().id.id].coord;
 
@@ -46,11 +39,12 @@ const addCity = () => {
 const App = () => {
   
   useEffect(() => {
+    
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if(key){
          let data = localStorage.getItem(key)
-         if(typeof data === 'string'){
+         if(data){
           let dataStorage= JSON.parse(data)
           store.dispatch(ADD_CITY(dataStorage.action.city))
          }
@@ -63,10 +57,7 @@ const App = () => {
       let lng = position.coords.longitude;
      
       getWeather(lat, lng)
-       .then(result => {
-         
-         store.dispatch(ADD_CITY(result))
-       })
+       .then(result => store.dispatch(ADD_CITY(result)))
     })
      
   }, [])

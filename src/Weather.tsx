@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Col, Button} from 'antd';
+import {Card, Col, Button, Space} from 'antd';
 
 import store from './redux-store';
 
@@ -30,21 +30,27 @@ const Weather = ({props}:any) => {
     
         return(
           <Col >
-            <Card title={city.city_name}>
+          <Space size={25}>
+            <Card title={city.city_name} >
                 {
                   data.map((data: any, index: number) => {
-                   
+                    
                     return(
-                      <div key={index}>
-                        <p>Data: {data.valid_date} </p>
-                        <img src={`https://www.weatherbit.io/static/img/icons/${data.weather.icon}.png`} alt="weather" width="70"/>
-                        <p>Temp: {data.temp}</p>
-                      </div>
+                      <Space size={25} key={index}>
+                        <Card title={data.valid_date}>
+                          <div >
+                            
+                            <img src={`https://www.weatherbit.io/static/img/icons/${data.weather.icon}.png`} alt="weather" width="70"/>
+                            <p>Temp: {data.temp}</p>
+                          </div>
+                          </Card>
+                        </Space>
                     )
                   })
                 }
                 <Button onClick={deleteWeather}>close</Button>
             </Card>
+            </Space>
           </Col>
         )
    
