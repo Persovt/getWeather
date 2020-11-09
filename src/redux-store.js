@@ -1,6 +1,11 @@
 import { createStore } from "redux";
 const initialState = {
-    city: []
+    
+      city: [],
+      id: {
+        id: -1
+      }
+   
   }
 
 const weatherReducer = (state = initialState, action) => {
@@ -8,6 +13,7 @@ const weatherReducer = (state = initialState, action) => {
         case 'ADD_CITY': return Object.assign({}, state, {
           city:[...state.city,{action}]
         })
+        case 'SELECT_ID': return Object.assign({}, state, {id:action})
         default: return state
     }
   }

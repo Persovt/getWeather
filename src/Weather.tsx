@@ -14,9 +14,5 @@ const Weather = (props: any) => {
    
    
 }
-const mapStateToProps = (state: any) => {
-    return {
-      title: state.title
-    };
-  };
-export default connect(mapStateToProps)(Weather);
+
+export default Weather
