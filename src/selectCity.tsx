@@ -1,21 +1,9 @@
 import React from 'react'
 import { Select } from 'antd';
 import store from './redux-store'
-
+import {SELECT_ID} from './reduxTypes'
 const cityList = require('./current.city.list.min.json')
 const { Option } = Select;
-
-
-const SELECT_ID = (result: string) => {
-    return{
-        type: 'SELECT_ID',
-        id: result
-    }
-}
-
-const onChange = (value: string) =>  store.dispatch(SELECT_ID(value))
-
-
 
 
 
@@ -30,7 +18,7 @@ const onChange = (value: string) =>  store.dispatch(SELECT_ID(value))
                     filterOption={(input, option: any) =>
                         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                       }
-                   onChange={onChange}
+                   onChange={(value: string) =>  store.dispatch(SELECT_ID(value))}
                 >
                 {
                     
