@@ -1,13 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { Select } from 'antd';
 import store from './redux-store'
-import {connect} from 'react-redux'
-import {getWeather} from './getWeather'
+
 const cityList = require('./current.city.list.min.json')
 
 
 type Coord = {lat: number, lon: number}
-type City = {name: String, coord: Coord, id: number}
+type City = {name: String, coord: Coord, id: number, filter: any}
 
 
 const { Option } = Select;
@@ -20,8 +19,10 @@ const SELECT_ID = (result: string) => {
     }
 }
 
-
 const onChange = (value: string) =>  store.dispatch(SELECT_ID(value))
+
+
+
 
  const selectCity = () => {
     return (
@@ -31,10 +32,15 @@ const onChange = (value: string) =>  store.dispatch(SELECT_ID(value))
                     style={{ width: 200 }}
                     placeholder="Select a person"
                     optionFilterProp="children"
-                
+                    filterOption={(input, option: any) =>
+                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                      }
                    onChange={onChange}
                 >
-                {cityList.map((sity: City, index: number) => {
+                {
+                
+                cityList.map((sity: City, index: number) => {
+                    
                 return(
                     <Option
                     key={index} 

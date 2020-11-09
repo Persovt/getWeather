@@ -1,8 +1,8 @@
-import React, {useState, useEffect}  from 'react';
-import {Button, Result} from 'antd'
-import { Select ,Card} from 'antd';
+import React, { useEffect}  from 'react';
+import {Button, Row } from 'antd'
+
 import store from './redux-store'
-import {useSelector} from 'react-redux'
+
 import { connect } from 'react-redux';
 
 import Weather from './Weather'
@@ -16,29 +16,55 @@ const ADD_CITY = (result: string) => {
     city: result
   }
 }
+const ADD_CURRECT_CITY = (result: string) => {
+  return{
+    type: 'ADD_CURRECT_CITY',
+    city: result
+  }
+}
 
 const addCity = () => {
-  let cityCoord = cityList[store.getState().id.id];
+  let cityCoord = cityList[store.getState().id.id].coord;
 
-  getWeather(cityCoord.coord.lat, cityCoord.coord.lon)
+  getWeather(cityCoord.lat, cityCoord.lon)
   .then(result => {
-  store.dispatch(ADD_CITY(result))
+  store.dispatch(ADD_CITY(result), console.log(result, "result"))
+    
+   store.getState().city.map((value: any, key: string) => {
+   
+ 
+     localStorage.setItem(value.action.city.city_name, JSON.stringify(value))
+   })
+ 
   })
+  console.log(localStorage)
 }
 
 
-store.subscribe(()=> {console.log(store.getState())})
+
 
 const App = () => {
-
+  
   useEffect(() => {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if(key){
+         let data = localStorage.getItem(key)
+         if(typeof data === 'string'){
+          let dataStorage= JSON.parse(data)
+          store.dispatch(ADD_CITY(dataStorage.action.city))
+         }
+        }
+    }
+      
+
     navigator.geolocation.getCurrentPosition(function(position) {
       let lat = position.coords.latitude;
       let lng = position.coords.longitude;
      
       getWeather(lat, lng)
        .then(result => {
-         console.log(result)
+         
          store.dispatch(ADD_CITY(result))
        })
     })
@@ -47,12 +73,14 @@ const App = () => {
   return (
       <div className="App">
        <SelectCity/>
-      {store.subscribe(()=> {console.log(store.getState().id.id, "ID!!!")})}
+      
        <Button type="primary" onClick={addCity} disabled={!(store.getState().id.id >= 0)}>Add city </Button>
-
-       { store.getState().city.map((city: any, index: number) => {
-         return( <Weather props={city} key={index}/>)
+      <Row>
+       { store.getState().city.map((city: any, index: any) => {
+         
+         return( <Weather key={index} props={city} id={index}  />)
        }) }
+       </Row>
     </div>
   );
 }

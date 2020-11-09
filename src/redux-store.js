@@ -1,4 +1,6 @@
 import { createStore } from "redux";
+
+
 const initialState = {
     
       city: [],
@@ -12,6 +14,12 @@ const weatherReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_CITY': return Object.assign({}, state, {
           city:[...state.city,{action}]
+        })
+        case 'ADD_CURRECT_CITY': return Object.assign({}, state, {
+          city:[{action}, state.city,]
+        })
+        case 'DELETE_CITY': return Object.assign({}, state, {
+          city:[...state.city.filter(reminder => {return((reminder.action.city.lat !== action.value.lat) && (reminder.action.city.lon !== action.value.lon))})]
         })
         case 'SELECT_ID': return Object.assign({}, state, {id:action})
         default: return state
